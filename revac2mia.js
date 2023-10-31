@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 const port = 3000;
 
 //configurando o acesso ao mongodb
-//o "/test" é o nome do banco que vai ter que colocar na prova
+//o "/test" é o nome do banco e vai ter que colocar na prova
 mongoose.connect("mongodb://127.0.0.1:27017/test",
 {
     useNewUrlParser : true,
@@ -32,7 +32,7 @@ const PessoaSchema = new mongoose.Schema({
 const Pessoa = mongoose.model("Pessoa", PessoaSchema);
 
 //configurando os roteamentos 
-app.post("/cadastropessoa", async()=>{
+app.post("/cadastropessoa", async(req, res)=>{
     const nome = req.body.nome;
     const email = req.body.email;
     const endereco = req.body.endereco;
@@ -57,6 +57,12 @@ app.post("/cadastropessoa", async()=>{
     }
 });
 
+//rota para o get cadastro
+app.get("/cadastropessoa", async(req, res)=>{
+    res.sendFile(__dirname +"/cadastropessoa.html");
+})
+
+//rota raiz - interligar o html/inw
 app.get("/", async(req, res)=>{
     res.sendFile(__dirname +"/index.html");
 })
@@ -65,4 +71,3 @@ app.get("/", async(req, res)=>{
 app.listen(port, ()=>{
     console.log(`O servidor está rodando na porta${port}`);
 });
-
